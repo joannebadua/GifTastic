@@ -6,7 +6,11 @@ event.preventDefault();
 }  //on-click listener
 }); //document ready end
 
-var queryURL = "https://api.giphy.com/v1/gifs/trending?api_key=wslWpWhssAgYDK6zVXacBDsacT47flr4";
+var danceMoves = $("#dance-input").val();
+// grab text from user input
+
+var queryURL = "https://api.giphy.com/v1/gifs/trending?" + danceMoves + "api_key=wslWpWhssAgYDK6zVXacBDsacT47flr4";
+// construct url
 
 // hit the queryURL with $ajax, 
 $.ajax({
