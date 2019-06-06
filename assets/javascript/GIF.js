@@ -1,8 +1,12 @@
 $(document).ready(function () {
-    var list = JSON.parse(localStorage.getItem("queryList"));
-
-    if(!Array.isArray(list)){
-        list=[];
+    var danceArray=[
+        "breaking",
+        "hula",
+        "salsa",
+        "zouk",
+        "house",
+        "burlesque",
+    ];
     };
 
 //on-click listener to add new buttons
