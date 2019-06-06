@@ -6,16 +6,31 @@ $(document).ready(function () {
         "zouk",
         "house",
         "burlesque",
+        "ballet",
     ];
-    };
+$(".gif").on("click", function(){
+var state = $(this).attr("data-state");
+if (state === "still"){
+    $(this).attr("src", $(this).attr("data-animate"));
+    $(this).attr("src", $(this).attr("data-animate"));
+}else{
+    $(this).attr("src", $(this).attr("data-still"));
+    $(this).attr("data-state", "still");
+}
+});
 
-//on-click listener to add new buttons
-    $(document).on("click", "#submit-button", function () {
+// Show Dancing GIFs
+function displayDance (){
+
+
+}
+
+// on-click listener to add new buttons when user adds another dance
+    $(".add-dance").on("click", function (event) {
         event.preventDefault();
-        if ($("#new-button-input".val()){
-            var userInput =$("#new-button-input").val();
-
-        }
+            var dance = $("#dance-input").val().trim();
+            danceArray.push(dance);
+            renderButtons();
     });
 
 var danceMoves = $("#dance-input").val();
