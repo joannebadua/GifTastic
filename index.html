@@ -1,29 +1,32 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>GIftastic</title>
-    </head>
-    <body>
-        <div class=container>
-           <h1>Dance Moves</h1>
-           <button data-dance="breakdancing">breaking</button>
-           <button data-dance="hula">hula</button>
-           <button data-dance="salsa">salsa</button>
-  <br><br><div id="gifs-appear-here">
-      <form id="dance-form">
-          <label for ="dance-input">Add Dance Style</label><br>
-          <input type="text" id="dance-input"><br>
-                <!-- Button triggers new movie to be added -->
-      <input id="add-movie" type="submit" value="Add a Movie">
-    </form>
-          <div id="movies-view"></div>
 
+<head>
+    <meta charset="utf-8">
+    <title>GIftastic</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript"></script>
+</head>
 
-  </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script type="text/javascript">
-  
-  </script>      </div>
+<body>
+    <div class=container>
+        <h1>Get Jiggy with GIFs</h1>
+        <!-- Buttons dropped here-->
+        <button data-dance="breaking">breaking</button>
+        <button data-dance="hula">hula</button>
+        <button data-dance="salsa">salsa</button>
+        <br><br>
+        <div class="dance-buttons"></div>
+        <!-- Add dance user input-->
+        <form id="form-inline text-center">
+            <label for="dance-input">Add a Dance Style</label><br>
+            <input type="text" id="dance-input"><br>
+            <!-- submit button-->
+            <input class="btn btn-primary add-dance" type="submit">
+        </form>
+        <!-- dance GIFs dropped here-->
+        <div class="dance"></div>
+    </div>
+    <script src="assets/javascript/GIF.js"></script>
     </body>
 </html>
