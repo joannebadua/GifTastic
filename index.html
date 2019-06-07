@@ -4,29 +4,39 @@
 <head>
     <meta charset="utf-8">
     <title>GIftastic</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript"></script>
+
+    <!--Styles goes here-->
+<style>
+
+    body {background-color: powderblue;}
+    h1   {color: blue;}
+    p    {color: red;}
+</style>
 </head>
 
 <body>
     <div class=container>
-        <h1>Get Jiggy with GIFs</h1>
+        <h1 style="text-align:center;">Get Jiggy with GIFs</h1>
+
+        <div id="buttonsPlace"></div>
         <!-- Buttons dropped here-->
-        <button data-dance="breaking">breaking</button>
+        <!-- <button data-dance="breaking">breaking</button>
         <button data-dance="hula">hula</button>
         <button data-dance="salsa">salsa</button>
         <br><br>
-        <div class="dance-buttons"></div>
+        <div class="dance-buttons"></div> -->
+        
         <!-- Add dance user input-->
-        <form id="form-inline text-center">
-            <label for="dance-input">Add a Dance Style</label><br>
+        <form id="myform" class="form-inline text-center"> 
+           <label for="dance-input">Add a Dance Style</label><br>
             <input type="text" id="dance-input"><br>
             <!-- submit button-->
-            <input class="btn btn-primary add-dance" type="submit">
+            <button id="submitButton" class="btn btn-primary add-dance" type="submit">Submit</button>
         </form>
         <!-- dance GIFs dropped here-->
-        <div class="dance"></div>
+        <div id="dance"></div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="assets/javascript/GIF.js"></script>
     </body>
 </html>
