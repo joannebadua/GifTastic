@@ -1,59 +1,84 @@
-$(document).ready(function () {
-    var danceArray=[
-        "breaking",
-        "hula",
-        "salsa",
-        "zouk",
-        "house",
-        "burlesque",
-        "ballet",
-    ];
-$(".gif").on("click", function(){
-var state = $(this).attr("data-state");
-if (state === "still"){
-    $(this).attr("src", $(this).attr("data-animate"));
-    $(this).attr("src", $(this).attr("data-animate"));
-}else{
-    $(this).attr("src", $(this).attr("data-still"));
-    $(this).attr("data-state", "still");
-}
-});
+var danceArray=[
+    "breaking",
+    "hula",
+    "salsa",
+    "zouk",
+    "house",
+    "burlesque",
+    "ballet",
+];
+      // displayMovieInfo function re-renders the HTML to display the appropriate content
+      function displayDance(){
+        var dance = $(this).attr("id");
+        var queryURL = "https://api.giphy.com/v1/gifs/trending?" + danceMoves + "api_key=wslWpWhssAgYDK6zVXacBDsacT47flr4";
 
-// Show Dancing GIFs
-function displayDance (){
+        // Creating an AJAX call for the specific movie button being clicked
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).done(function (response) {
 
+          // Creating a div to hold dance
+          var dance = $("<div class='dance'>");
 
-}
+          console.log(response);
+          // Storing the rating data
+          giphyData = response.data;
+        
+        // Retrieving the URL for the image
+          var imgURL = response.Poster;
 
-// on-click listener to add new buttons when user adds another dance
-    $(".add-dance").on("click", function (event) {
+          // Creating an element to hold the image
+          var image = $("<img>").attr("src", imgURL);
+
+          // Appending the image
+          dance.append(image);
+
+          $(".dance").empty();
+
+        //   // Putting the entire movie above the previous movies
+        //   $(".dance").prepend(dance);
+        });
+
+      // Function for displaying movie data
+      function renderButtons() {
+
+        // Deleting the movies prior to adding new movies
+        // (this is necessary otherwise you will have repeat buttons)
+        $("#buttons-view").empty();
+
+        // Looping through the array of movies
+        for (var i = 0; i < dance.length; i++) {
+
+          // Then dynamicaly generating buttons for each movie in the array
+          // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
+          var newButton = $("<button>");
+          // Adding a class of dance-btn to our button
+          newButton.addClass("dance-btn");
+          // Adding a data-attribute
+          newButton.attr("data-name", dance[i]);
+          // Providing the initial button text
+          newButton.text(movies[i]);
+          // Adding the button to the buttons-view div
+          $("#buttons-view").append(newButton);
+        }
+      }
+
+      // This function handles events where a movie button is clicked
+      $("#add-dance").on("click", function(event) {
         event.preventDefault();
-            var dance = $("#dance-input").val().trim();
-            danceArray.push(dance);
-            renderButtons();
-    });
+        // This line grabs the input from the textbox
+        var dance = $("#dance-input").val().trim();
 
-var danceMoves = $("#dance-input").val();
-// grab text from user input
+        // Adding movie from the textbox to our array
+        danceMoves.push(dance);
 
-// display what the user types in
-var queryURL = "https://api.giphy.com/v1/gifs/trending?" + danceMoves + "api_key=wslWpWhssAgYDK6zVXacBDsacT47flr4";
-// construct url
+        // Calling renderButtons which handles the processing of our dance array
+        renderButtons();
+      });
 
-// hit the queryURL with $ajax, 
-$.ajax({
-    url: queryURL,
-    method: "GET"
-}).then(function (response) {
-    // then take the response data
-    // and display it in the div with an id of movie-view
-$(".dance-image").empty();
+      // Adding a click event listener to all elements with a class of "dance-btn"
+      $(document).on("click", ".dance-btn", displayDance);
 
-    // saving the image_original_url property 
-    var imageURL = response.data.image_original_url;
-    var danceImage = $("<img>");
-danceImage.attr("src", imageUrl);
-danceImage.attr("alt", "dance image");
-$("#gifs-appear-here").prepend(danceImage)
-
-});
+      // Calling the renderButtons function to display the intial buttons
+      renderButtons();
