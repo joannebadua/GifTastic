@@ -4,121 +4,73 @@ var submitButton = $("#submitButton");
 var imgPlace = $("#dance")
 var gifCount = 0;
 var gifLocation;
-var danceArray = [
-  "breaking",
-  "hula",
-  "salsa",
-  "zouk",
-  "house",
-  "burlesque",
-  "ballet",
+var topics = [
+ "bboy",
+ "hula",
+ "salsa",
+ "zouk",
+ "house dance",
+ "burlesque",
+ "ballet",
+ "foxtrot",
+ "jazz dance",
+"waltz"
 ];
 
-// dynamically create buttons
-function createButtons() {
-  buttonsPlace.empty();
-  for (var i = 0; i < danceArray.length; i++) {
-    var button = $('<button>');
-    button.addClass('btn-dance');
-    button.attr('data-name', danceArray[i]);
-    button.text(danceArray[i]);
-    buttonsPlace.append(button);
-  }
+function createButtons(){
+ buttonsPlace.empty();
+ for(var i=0; i< topics.length; i++){
+   var button =$('<button>');
+   button.addClass('btn-dance');
+   button.attr('data-name', topics[i]);
+   button.text(topics[i]);
+   buttonsPlace.append(button);
+ }
 }
 createButtons();
 
-// when another dance is submitted
-submitButton.on('click', function (event) {
-  event.preventDefault();
-  var inputValue = danceInput.val()
-  if (inputValue.length > 1) {
-    danceArray.push(inputValue);
-    createButtons();
-  };
+submitButton.on('click', function(event){
+ event.preventDefault();
+ var inputValue = danceInput.val()
+ if (inputValue.length> 1){
+     topics.push(inputValue);
+     createButtons();
+   };
 });
 
-// when a dance button is clicked
 $(document.body).on('click', '.btn-dance', function(){
+  imgPlace.empty();
 
-  var danceName = $(this).attr('data-name');
-  // console.log(danceName);
-        var queryURL = "https://api.giphy.com/v1/gifs/trending?" + danceName + "&api_key=wslWpWhssAgYDK6zVXacBDsacT47flr4";
+ var danceName = $(this).attr('data-name');
+       var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + danceName + "&api_key=wslWpWhssAgYDK6zVXacBDsacT47flr4&limit=10";
 
-        $.ajax({url: queryURL, type: 'GET'}).then(function(response){
-var results = response.data
-
-var img = $('<img>')
-img.attr('src', response.data[0].images.fixed_height_still.url)
-imgPlace.append(img)
-img.attr('data-state', 'still')
-img.attr('data-still', danceArray[i].images.fixed_height_still.url)
-img.attr('data-active', danceArray[i].images.fixed_height_url)
-img.addClass('btn-dance')
-
-for (i = 0; i < danceArray[i].length; i++){
-  // var rating = results[i].rating
-  // var r = $('<p>').text('Rating: ' + rating)
-var rating = danceArray[i].rating
-var r = $('<p>').text('Rating: ' + rating)
-// imgPlace.append(r)
-      }
-      });
-
-        });
+       $.ajax({url: queryURL, type: 'GET'}).then(function(response){
+         var images = response.data;
+         console.log(response);
+         for(var i=0; i< images.length; i++){
+          var img = $('<img>');
+          img.attr('src', images[i].images.fixed_height_still.url);
+           var imgStill = images[i].images.fixed_height_still.url;
+           var imgAnimate = images[i].images.fixed_height.url;
+           img.attr('data-still', imgStill);
+           img.attr('data-animate', imgAnimate);
+           img.attr('data-state', 'still');
+           img.addClass('img-dance');
+           imgPlace.append(img);
+         }
+// var img = $('<img>').attr('src', response.data[0].images.fixed_height_still.url);
+         
+       })
+});
 
 
-//     img.attr('src', response.data[0].images.fixed_height_still.url);
-//     img.attr({ 'data-animate': data[0].images.fixed_height.url });
-//     img.attr({ 'data-state': "still" });
-//     img.attr({ 'data-still': data[0].images.fixed_height_still.url });
-//     imgPlace.append(pRating);
-    
-
-//     if (data[0].rating !== "g" || "pg" || "pg-13" || "y") {
-//       $("#dance").append(imgPlace);
-// };
-
-// $(document.body).on("click", function () {
-
-
-//   var state = $(this).attr('data-state');
-
-
-//   if (state === "still") {
-//     $(this).attr("src", $(this).attr("data-animate"));
-//     $(this).attr("data-state", "animate");
-//   } else {
-//     $(this).attr("src", $(this).attr("data-still"));
-//     $(this).attr("data-state", "still");
-//   }
-// });
-// });});
-
-
-
-
-//     var rating = $('<p></p>');
-//       rating.text('Rating: ' + danceArray[j].rating);
-//       img.attr('id', danceArray[i].id);
-//       img.attr('still', 'true');
-//       $("#buttonsPlace").append(rating);
-//       $("#buttonsPlace").append(picture);
-//         });
-     
-//   function danceGIF () {
-//     var gifDance = $(this).attr('id');
-//     for (var j=0; j < danceArray.length; i++) {
-//       if (danceArray[j].id === gifDance){
-//         if($(this).attr("still") == "true"){
-//           $(this).append($(this).attr("src", danceArray[k].images.fixed_height_small.url));
-//           $(this).attr('still', 'false');
-//         }
-//         else if ($(this).attr('still') == 'false'){
-//           $(this).append($(this).attr('src', danceArray[k].images.fixed_height_still.url));
-//           $(this).attr('still', 'true');
-//         }
-//       }
-//   }
-// }
-
-//   })
+$(document.body).on('click', '.img-dance', function(){
+  var state = $(this).attr('data-state');
+  if(state === 'still'){
+    $(this).attr('src', $(this).attr('data-animate'));
+    $(this).attr('data-state', 'animate');
+  }else{
+    $(this).attr('src', $(this).attr('data-still'));
+    $(this).attr('data-state', 'still');
+  }
+})
